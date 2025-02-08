@@ -2,20 +2,18 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
 function createWindow() {
-  // Create a new browser window
+  // Create a new browser window with the menu bar hidden
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration: true, // Allow Node.js features in the renderer process
-    }
+    },
+    autoHideMenuBar: true, // Hide the menu bar by default
   });
 
   // Load the index.html file
   win.loadFile('index.html');
-
-  // Open the DevTools (optional)
-  win.webContents.openDevTools();
 }
 
 // This method will be called when Electron has finished initialization

@@ -20,12 +20,26 @@
     .container {
       width: 80%;
       max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center; /* Center the title */
+      margin-bottom: 60px; /* Increased margin to move title higher */
+    }
+
+    /* Flex container for input and button on the same line */
+    .input-container {
+      display: flex;
+      width: 100%;
+      margin-bottom: 10px;
     }
 
     #inputField {
-      width: 100%;
+      flex: 1;
       padding: 10px;
-      margin-bottom: 10px;
       font-size: 16px;
       border-radius: 5px;
       border: 1px solid #ddd;
@@ -39,6 +53,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      margin-left: 10px;
     }
 
     #submitBtn:hover {
@@ -62,10 +77,11 @@
 <body>
   <div class="container">
     <h1>P2P File System Query</h1>
-    <!-- Input Field -->
-    <input type="text" id="inputField" placeholder="Enter some text..." />
-    <!-- Submit Button -->
-    <button id="submitBtn">Submit</button>
+    <!-- Flex container for input and submit button -->
+    <div class="input-container">
+      <input type="text" id="inputField" placeholder="Enter some text..." />
+      <button id="submitBtn">Submit</button>
+    </div>
     <!-- Output Field -->
     <textarea id="outputField" readonly></textarea>
   </div>
