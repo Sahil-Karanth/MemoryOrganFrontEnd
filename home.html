@@ -117,9 +117,8 @@
     submitBtn.addEventListener('click', () => {
       const inputText = inputField.value;
       outputField.value = `You submitted: ${inputText}`;
-      inputField.value = ''; // Clear input field
+      inputField.value = '';
       console.log(localStorage.getItem('username'))
-      console.log("did we output?")
     });
 
     // Handle logout

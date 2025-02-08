@@ -118,6 +118,8 @@
           // Successful login
           const user = userCredential.user;
           console.log('Logged in as:', user.email);
+          localStorage.setItem('username', user.email);
+
           window.location.href = 'home.html'; // Redirect to home page
         })
         .catch((error) => {
