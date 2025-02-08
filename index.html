@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electron App</title>
+  <style>
+    body {
+      background-color: #a2c8f4; /* Pastel blue background */
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 500px;
+    }
+
+    #inputField {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    #submitBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #5d8c9e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #submitBtn:hover {
+      background-color: #4b6e7b;
+    }
+
+    #outputField {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      margin-top: 20px;
+      background-color: #f1f8ff; /* Lighter pastel blue for output area */
+      resize: none;
+      white-space: pre-wrap; /* Ensures line breaks are respected */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>P2P File System Query</h1>
+    <!-- Input Field -->
+    <input type="text" id="inputField" placeholder="Enter some text..." />
+    <!-- Submit Button -->
+    <button id="submitBtn">Submit</button>
+    <!-- Output Field -->
+    <textarea id="outputField" readonly></textarea>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById('submitBtn');
+    const inputField = document.getElementById('inputField');
+    const outputField = document.getElementById('outputField');
+
+    submitBtn.addEventListener('click', () => {
+      const inputText = inputField.value;
+      outputField.value = `You submitted: ${inputText}`;
+      inputField.value = ''; // Clear input field
+    });
+  </script>
+</body>
+</html>
