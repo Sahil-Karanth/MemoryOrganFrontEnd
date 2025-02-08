@@ -1,32 +1,35 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
+let win;
+
 function createWindow() {
-  // Create a new browser window with the menu bar hidden
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true, // Allow Node.js features in the renderer process
-    },
-    autoHideMenuBar: true, // Hide the menu bar by default
+      nodeIntegration: true,
+      contextIsolation: false, // Set to true for better security in production
+    }
   });
 
-  // Load the index.html file
+  // Initially load the first HTML file
   win.loadFile('index.html');
+
+  // Uncomment the following to switch to the second HTML file after a timeout (just for demonstration)
+  // setTimeout(() => {
+  //   win.loadFile('secondPage.html');
+  // }, 5000); // Switch after 5 seconds
 }
 
-// This method will be called when Electron has finished initialization
 app.whenReady().then(() => {
   createWindow();
 
-  // Quit the app when all windows are closed
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
   });
 });
 
-// For macOS: re-create the window when clicking the app icon in the dock
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();

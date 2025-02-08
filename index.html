@@ -3,98 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Electron App</title>
+  <title>Login</title>
   <style>
     body {
-      background-color: #a2c8f4; /* Pastel blue background */
       font-family: Arial, sans-serif;
-      padding: 20px;
+      background-color: #f0f4f8;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
       margin: 0;
     }
 
-    .container {
-      width: 80%;
-      max-width: 500px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .login-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 320px; /* Added max-width for responsiveness */
+      box-sizing: border-box; /* Ensure padding does not overflow the container */
     }
 
     h1 {
-      text-align: center; /* Center the title */
-      margin-bottom: 60px; /* Increased margin to move title higher */
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    /* Flex container for input and button on the same line */
-    .input-container {
-      display: flex;
+    .input-field {
       width: 100%;
-      margin-bottom: 10px;
-    }
-
-    #inputField {
-      flex: 1;
-      padding: 10px;
+      padding: 12px; /* Increased padding for better spacing */
+      margin-bottom: 15px; /* Adjusted margin to provide space between fields */
       font-size: 16px;
       border-radius: 5px;
       border: 1px solid #ddd;
+      box-sizing: border-box; /* Make sure padding does not cause overflow */
     }
 
-    #submitBtn {
-      padding: 10px 20px;
+    .submit-btn {
+      width: 100%;
+      padding: 12px; /* Adjusted padding to match input fields */
       font-size: 16px;
-      background-color: #5d8c9e;
+      background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-left: 10px;
+      box-sizing: border-box; /* Ensures button fits within the container */
     }
 
-    #submitBtn:hover {
-      background-color: #4b6e7b;
+    .submit-btn:hover {
+      background-color: #45a049;
     }
 
-    #outputField {
-      width: 100%;
-      height: 200px;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      margin-top: 20px;
-      background-color: #f1f8ff; /* Lighter pastel blue for output area */
-      resize: none;
-      white-space: pre-wrap; /* Ensures line breaks are respected */
+    .error-message {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>P2P File System Query</h1>
-    <!-- Flex container for input and submit button -->
-    <div class="input-container">
-      <input type="text" id="inputField" placeholder="Enter some text..." />
-      <button id="submitBtn">Submit</button>
-    </div>
-    <!-- Output Field -->
-    <textarea id="outputField" readonly></textarea>
+  <div class="login-container">
+    <h1>Login</h1>
+    <input type="email" id="email" class="input-field" placeholder="Email" required>
+    <input type="password" id="password" class="input-field" placeholder="Password" required>
+    <button id="loginBtn" class="submit-btn">Login</button>
+    <div id="errorMessage" class="error-message"></div>
   </div>
 
   <script>
-    const submitBtn = document.getElementById('submitBtn');
-    const inputField = document.getElementById('inputField');
-    const outputField = document.getElementById('outputField');
+    // Get the DOM elements
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorMessage = document.getElementById('errorMessage');
 
-    submitBtn.addEventListener('click', () => {
-      const inputText = inputField.value;
-      outputField.value = `You submitted: ${inputText}`;
-      inputField.value = ''; // Clear input field
+    // Add event listener for the login button
+    loginBtn.addEventListener('click', () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      // Validate inputs (basic check)
+      if (!email || !password) {
+        errorMessage.textContent = 'Both fields are required!';
+        return;
+      }
+
+      // Simulate login logic (You can replace this with Firebase authentication or custom logic)
+      if (email === 'a' && password === 'a') {
+        // Simulate successful login, redirect to another page (e.g., home page)
+        window.location.href = 'home.html'; // You can replace this with Electron's loadFile if needed
+      } else {
+        errorMessage.textContent = 'Invalid email or password.';
+      }
     });
   </script>
 </body>
