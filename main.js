@@ -16,10 +16,6 @@ function createWindow() {
   // Initially load the first HTML file
   win.loadFile('index.html');
 
-  // Uncomment the following to switch to the second HTML file after a timeout (just for demonstration)
-  // setTimeout(() => {
-  //   win.loadFile('secondPage.html');
-  // }, 5000); // Switch after 5 seconds
 }
 
 app.whenReady().then(() => {

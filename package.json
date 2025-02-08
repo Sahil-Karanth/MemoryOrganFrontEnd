@@ -7,6 +7,9 @@
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "^latest"
+    "electron": "^25.0.0"
+  },
+  "dependencies": {
+    "firebase": "^11.3.0"
   }
 }

@@ -21,8 +21,8 @@
       border-radius: 8px;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 320px; /* Added max-width for responsiveness */
-      box-sizing: border-box; /* Ensure padding does not overflow the container */
+      max-width: 320px;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -32,24 +32,24 @@
 
     .input-field {
       width: 100%;
-      padding: 12px; /* Increased padding for better spacing */
-      margin-bottom: 15px; /* Adjusted margin to provide space between fields */
+      padding: 12px;
+      margin-bottom: 15px;
       font-size: 16px;
       border-radius: 5px;
       border: 1px solid #ddd;
-      box-sizing: border-box; /* Make sure padding does not cause overflow */
+      box-sizing: border-box;
     }
 
     .submit-btn {
       width: 100%;
-      padding: 12px; /* Adjusted padding to match input fields */
+      padding: 12px;
       font-size: 16px;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      box-sizing: border-box; /* Ensures button fits within the container */
+      box-sizing: border-box;
     }
 
     .submit-btn:hover {
@@ -73,7 +73,27 @@
     <div id="errorMessage" class="error-message"></div>
   </div>
 
-  <script>
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase modules properly
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxuWQr2OhfLvKU0KF1hHDqBXGmaR-5mPo",
+      authDomain: "memoryorganauth.firebaseapp.com",
+      projectId: "memoryorganauth",
+      storageBucket: "memoryorganauth.appspot.com", // Fixed this
+      messagingSenderId: "333239312434",
+      appId: "1:333239312434:web:6c247813673d3a6a5a1c2b",
+      measurementId: "G-6BMLQF2S68"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
     // Get the DOM elements
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
@@ -82,6 +102,7 @@
 
     // Add event listener for the login button
     loginBtn.addEventListener('click', () => {
+      console.log('CLICKED');
       const email = emailInput.value;
       const password = passwordInput.value;
 
@@ -91,14 +112,21 @@
         return;
       }
 
-      // Simulate login logic (You can replace this with Firebase authentication or custom logic)
-      if (email === 'a' && password === 'a') {
-        // Simulate successful login, redirect to another page (e.g., home page)
-        window.location.href = 'home.html'; // You can replace this with Electron's loadFile if needed
-      } else {
-        errorMessage.textContent = 'Invalid email or password.';
-      }
+      // Firebase authentication: sign in with email and password
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Successful login
+          const user = userCredential.user;
+          console.log('Logged in as:', user.email);
+          window.location.href = 'home.html'; // Redirect to home page
+        })
+        .catch((error) => {
+          // Handle errors
+          errorMessage.textContent = 'Error: ' + error.message;
+          console.error(`Error: ${error.message}`);
+        });
     });
+
   </script>
 </body>
 </html>

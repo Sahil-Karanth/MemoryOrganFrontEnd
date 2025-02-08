@@ -118,6 +118,8 @@
       const inputText = inputField.value;
       outputField.value = `You submitted: ${inputText}`;
       inputField.value = ''; // Clear input field
+      console.log(localStorage.getItem('username'))
+      console.log("did we output?")
     });
 
     // Handle logout
