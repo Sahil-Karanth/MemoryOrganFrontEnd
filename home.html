@@ -128,7 +128,7 @@
     const outputField = document.getElementById('outputField');
     const logoutBtn = document.getElementById('logoutBtn');
     
-    const MASTER_NODE_PORT = 1000;
+    const MASTER_NODE_PORT = 3001;
 
     // Handle input submission
     submitBtn.addEventListener('click', async () => {
@@ -163,9 +163,10 @@
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = await response.text();
         console.log('Success:', data);
-        outputField.value = JSON.stringify(data, null, 2);
+        // outputField.value = JSON.stringify(data, null, 2);
+        outputField.value = data
       } catch (error) {
         console.error('Error:', error);
         outputField.value = `Error: ${error.message}`;
