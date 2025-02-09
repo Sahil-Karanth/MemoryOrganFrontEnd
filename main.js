@@ -1,8 +1,16 @@
 const { app, BrowserWindow } = require('electron');
 const crypto = require('crypto');
+const { isBigInt64Array } = require('util/types');
 
 
-const isBot = false
+const arg = process.argv[2].toLocaleLowerCase();
+let isBot = false;
+
+if (arg == "true") {
+  isBot = true
+} else if (arg != "false") {
+  throw new Error(`Incorrect argument. Expected 'true' or 'false', but got ${arg}`);
+}
 
 function makeElectronApp() {
 
