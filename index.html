@@ -67,7 +67,7 @@
 <body>
   <div class="login-container">
     <h1>Login</h1>
-    <input type="text" id="username" class="input-field" placeholder="Username" required>
+    <input type="text" id="username" class="input-field" placeholder="Walled ID" required>
     <input type="password" id="password" class="input-field" placeholder="Password" required>
     <button id="loginBtn" class="submit-btn">Login</button>
     <div id="errorMessage" class="error-message"></div>
@@ -128,7 +128,7 @@
         window.location.href = 'home.html';
       } catch (error) {
         console.error('Login error:', error);
-        errorMessage.textContent = 'Invalid username or password';
+        errorMessage.textContent = 'Invalid Wallet ID or password';
       }
     });
 
