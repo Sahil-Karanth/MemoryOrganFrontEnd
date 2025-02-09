@@ -95,7 +95,6 @@
     const loginBtn = document.getElementById('loginBtn');
     const errorMessage = document.getElementById('errorMessage');
 
-    // Add enter key support for both inputs
     [usernameInput, passwordInput].forEach(input => {
       input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -108,17 +107,14 @@
       const username = usernameInput.value;
       const password = passwordInput.value;
 
-      // Clear previous error
       errorMessage.textContent = '';
 
-      // Validate inputs
       if (!username || !password) {
         errorMessage.textContent = 'Both fields are required!';
         return;
       }
 
       try {
-        // Convert username to email format
         const email = `${username}@gmail.com`;
 
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -131,42 +127,7 @@
         errorMessage.textContent = 'Invalid username or password';
       }
     });
-
-    // loginBtn.addEventListener('click', async () => {
-    //   const username = usernameInput.value;
-    //   const password = passwordInput.value;
-
-    //   // Clear previous error
-    //   errorMessage.textContent = '';
-
-    //   // Validate inputs
-    //   if (!username || !password) {
-    //     errorMessage.textContent = 'Both fields are required!';
-    //     return;
-    //   }
-
-    //   try {
-    //     // Convert username to email format
-    //     let email;
-    //     if (username === 'myadmin') {
-    //       email = 'myadmin@gmail.com';
-    //     } else {
-    //       email = username; // Keep original input if not admin
-    //     }
-
-    //     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    //     const user = userCredential.user;
-    //     console.log('Logged in as:', user.email);
-    //     localStorage.setItem('username', username); // Store original username
-    //     window.location.href = 'home.html';
-    //   } catch (error) {
-    //     console.error('Login error:', error);
-    //     errorMessage.textContent = 'Invalid username or password';
-    //   }
-    // });
-
     
-    // Check if user is already logged in
     auth.onAuthStateChanged((user) => {
       if (user) {
         window.location.href = 'home.html';

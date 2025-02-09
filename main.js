@@ -18,7 +18,6 @@ function makeElectronApp() {
         }
       });
     
-      // Initially load the first HTML file
       win.loadFile('index.html');
     
     }
@@ -72,7 +71,7 @@ function handleBotConnection() {
   .catch(console.error);
 }
 
-if (isBot) {
+if (!isBot) {
   makeElectronApp()
 } else {
   handleBotConnection()

@@ -6,7 +6,7 @@
   <title>P2P File System Query</title>
   <style>
     body {
-      background-color: #a2c8f4; /* Pastel blue background */
+      background-color: #a2c8f4;
       font-family: Arial, sans-serif;
       padding: 20px;
       display: flex;
@@ -26,11 +26,10 @@
     }
 
     h1 {
-      text-align: center; /* Center the title */
-      margin-bottom: 60px; /* Increased margin to move title higher */
+      text-align: center;
+      margin-bottom: 60px;
     }
 
-    /* Flex container for input and button on the same line */
     .input-container {
       display: flex;
       width: 100%;
@@ -68,16 +67,15 @@
       border-radius: 5px;
       border: 1px solid #ddd;
       margin-top: 20px;
-      background-color: #f1f8ff; /* Lighter pastel blue for output area */
+      background-color: #f1f8ff;
       resize: none;
-      white-space: pre-wrap; /* Ensures line breaks are respected */
+      white-space: pre-wrap;
     }
 
-    /* Logout button */
     #logoutBtn {
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #f44336; /* Red color for logout */
+      background-color: #f44336;
       color: white;
       border: none;
       border-radius: 5px;
@@ -140,7 +138,6 @@
 
         const idToken = await user.getIdToken(true);
 
-        // Use electronAPI for secure network requests
         const response = await fetch(
           `http://localhost:${MASTER_NODE_PORT}`,
           {
@@ -165,7 +162,6 @@
       }
     });
 
-    // Add enter key support for input field
     inputField.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         submitBtn.click();
@@ -182,7 +178,6 @@
       }
     });
 
-    // Check authentication state
     auth.onAuthStateChanged((user) => {
       if (!user) {
         window.location.href = 'index.html';

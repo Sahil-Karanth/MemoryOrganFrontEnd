@@ -1,8 +1,6 @@
-// Import the necessary Firebase modules
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-// Your Firebase configuration object
 const firebaseConfig = {
   apiKey: "AIzaSyAxuWQr2OhfLvKU0KF1hHDqBXGmaR-5mPo",
   authDomain: "memoryorganauth.firebaseapp.com",
@@ -13,10 +11,8 @@ const firebaseConfig = {
   measurementId: "G-WQDLHPXY4Q"
 };
 
-// Initialize Firebase App
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Authentication
 const auth = getAuth(app);
 
 export { auth };
