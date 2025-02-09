@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Electron App</title>
+  <title>P2P File System Query</title>
   <style>
     body {
       background-color: #a2c8f4; /* Pastel blue background */
@@ -104,11 +104,9 @@
   </div>
 
   <script type="module">
-    // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
 
-    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAxuWQr2OhfLvKU0KF1hHDqBXGmaR-5mPo",
       authDomain: "memoryorganauth.firebaseapp.com",
@@ -119,7 +117,6 @@
       measurementId: "G-6BMLQF2S68"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
@@ -130,53 +127,54 @@
     
     const MASTER_NODE_PORT = 3001;
 
-    // Handle input submission
     submitBtn.addEventListener('click', async () => {
       try {
         const inputText = inputField.value;
         inputField.value = '';
 
-        // Get the current user
         const user = auth.currentUser;
         if (!user) {
           throw new Error('No user is signed in');
         }
 
-        // Get the ID token
+
         const idToken = await user.getIdToken(true);
-        console.log('Got token:', idToken); // Debug log
 
-        // Make the API request with the token
-        const response = await fetch(`http://localhost:${MASTER_NODE_PORT}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`
-          },
-          body: JSON.stringify({
-            username: localStorage.getItem('username'),
-            inputData: inputText
-          })
-        });
+        // Use electronAPI for secure network requests
+        const response = await fetch(
+          `http://localhost:${MASTER_NODE_PORT}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${idToken}`
+            },
+            body: JSON.stringify({
+              username: localStorage.getItem('username'),
+              inputData: inputText
+            })
+          }
+        );
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        outputField.value = await response.text();
 
-        const data = await response.text();
-        console.log('Success:', data);
-        // outputField.value = JSON.stringify(data, null, 2);
-        outputField.value = data
       } catch (error) {
+        console.log("ERROR OVER HERE!")
         console.error('Error:', error);
         outputField.value = `Error: ${error.message}`;
       }
     });
 
-    // Handle logout
+    // Add enter key support for input field
+    inputField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        submitBtn.click();
+      }
+    });
+
     logoutBtn.addEventListener('click', async () => {
       try {
-        await auth.signOut();
+        await signOut(auth);
         window.location.href = 'index.html';
       } catch (error) {
         console.error('Logout error:', error);
@@ -184,12 +182,10 @@
       }
     });
 
-    // Check authentication state on page load
+    // Check authentication state
     auth.onAuthStateChanged((user) => {
       if (!user) {
         window.location.href = 'index.html';
-      } else {
-        console.log('User is authenticated:', user.email);
       }
     });
   </script>

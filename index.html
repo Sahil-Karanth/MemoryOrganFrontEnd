@@ -67,68 +67,111 @@
 <body>
   <div class="login-container">
     <h1>Login</h1>
-    <input type="email" id="email" class="input-field" placeholder="Email" required>
+    <input type="text" id="username" class="input-field" placeholder="Username" required>
     <input type="password" id="password" class="input-field" placeholder="Password" required>
     <button id="loginBtn" class="submit-btn">Login</button>
     <div id="errorMessage" class="error-message"></div>
   </div>
 
-  <!-- Firebase SDK -->
   <script type="module">
-    // Import Firebase modules properly
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
 
-    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyAxuWQr2OhfLvKU0KF1hHDqBXGmaR-5mPo",
       authDomain: "memoryorganauth.firebaseapp.com",
       projectId: "memoryorganauth",
-      storageBucket: "memoryorganauth.appspot.com", // Fixed this
+      storageBucket: "memoryorganauth.appspot.com",
       messagingSenderId: "333239312434",
       appId: "1:333239312434:web:6c247813673d3a6a5a1c2b",
       measurementId: "G-6BMLQF2S68"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Get the DOM elements
-    const emailInput = document.getElementById('email');
+    const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const loginBtn = document.getElementById('loginBtn');
     const errorMessage = document.getElementById('errorMessage');
 
-    // Add event listener for the login button
-    loginBtn.addEventListener('click', () => {
-      console.log('CLICKED');
-      const email = emailInput.value;
+    // Add enter key support for both inputs
+    [usernameInput, passwordInput].forEach(input => {
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          loginBtn.click();
+        }
+      });
+    });
+
+    loginBtn.addEventListener('click', async () => {
+      const username = usernameInput.value;
       const password = passwordInput.value;
 
-      // Validate inputs (basic check)
-      if (!email || !password) {
+      // Clear previous error
+      errorMessage.textContent = '';
+
+      // Validate inputs
+      if (!username || !password) {
         errorMessage.textContent = 'Both fields are required!';
         return;
       }
 
-      // Firebase authentication: sign in with email and password
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Successful login
-          const user = userCredential.user;
-          console.log('Logged in as:', user.email);
-          localStorage.setItem('username', user.email);
+      try {
+        // Convert username to email format
+        const email = `${username}@gmail.com`;
 
-          window.location.href = 'home.html'; // Redirect to home page
-        })
-        .catch((error) => {
-          // Handle errors
-          errorMessage.textContent = 'Error: ' + error.message;
-          console.error(`Error: ${error.message}`);
-        });
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log('Logged in as:', user.email);
+        localStorage.setItem('username', username); // Store original username
+        window.location.href = 'home.html';
+      } catch (error) {
+        console.error('Login error:', error);
+        errorMessage.textContent = 'Invalid username or password';
+      }
     });
 
+    // loginBtn.addEventListener('click', async () => {
+    //   const username = usernameInput.value;
+    //   const password = passwordInput.value;
+
+    //   // Clear previous error
+    //   errorMessage.textContent = '';
+
+    //   // Validate inputs
+    //   if (!username || !password) {
+    //     errorMessage.textContent = 'Both fields are required!';
+    //     return;
+    //   }
+
+    //   try {
+    //     // Convert username to email format
+    //     let email;
+    //     if (username === 'myadmin') {
+    //       email = 'myadmin@gmail.com';
+    //     } else {
+    //       email = username; // Keep original input if not admin
+    //     }
+
+    //     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    //     const user = userCredential.user;
+    //     console.log('Logged in as:', user.email);
+    //     localStorage.setItem('username', username); // Store original username
+    //     window.location.href = 'home.html';
+    //   } catch (error) {
+    //     console.error('Login error:', error);
+    //     errorMessage.textContent = 'Invalid username or password';
+    //   }
+    // });
+
+    
+    // Check if user is already logged in
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        window.location.href = 'home.html';
+      }
+    });
   </script>
 </body>
 </html>
