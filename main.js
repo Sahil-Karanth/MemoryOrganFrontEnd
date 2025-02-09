@@ -72,7 +72,7 @@ function handleBotConnection() {
   .catch(console.error);
 }
 
-if (isBot) {
+if (!isBot) {
   makeElectronApp()
 } else {
   handleBotConnection()
